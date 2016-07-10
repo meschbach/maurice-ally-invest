@@ -1,0 +1,28 @@
+{
+  "name": "trade-king-api",
+  "version": "0.0.1",
+  "description": "Abstraction for trade king api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeNgamer/tradeKingApi.git"
+  },
+  "keywords": [
+    "tradeking",
+    "stock",
+    "api"
+  ],
+  "author": "codeNgamer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeNgamer/tradeKingApi/issues"
+  },
+  "homepage": "https://github.com/codeNgamer/tradeKingApi#readme",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "oauth": "^0.9.14"
+  }
+}
