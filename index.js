@@ -5,7 +5,7 @@ class tradekingApi {
   constructor(options) {
     const isValidCredentials = this._validateCredentials(options);
     if (!isValidCredentials) {
-      this.throwError('Invalid Credentials');
+      this._throwError('Invalid Credentials');
       return false;
     }
 
