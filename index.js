@@ -1,5 +1,6 @@
 const oauth = require('oauth');
 const _ = require('lodash');
+const js2xmlparser = require("js2xmlparser");
 
 class tradekingApi {
   constructor(options) {
@@ -108,7 +109,12 @@ class tradekingApi {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/orders`);
   }
-
+  
+  postAccountOrders(id) {
+   this._validateId(id);
+   return this._getApiEndPoint(`accounts/${id}/orders`);
+  }
+  
   balanceForAccount(id) {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/balances`);
@@ -117,6 +123,11 @@ class tradekingApi {
   historyForAccount(id) {
     this._validateId(id);
     return this._getApiEndPoint(`accounts/${id}/history`);
+  }
+  
+  holdingsForAccount(id) {
+    this._validateId(id);
+    return this._getApiEndPoint(`accounts/${id}/holdings`);
   }
 
   marketClock() {
@@ -173,5 +184,33 @@ class tradekingApi {
   }
 
 }
+
+const options = { declaration: { include: false }};
+const fixmlRoot = {
+  '@': {
+    xmlns:"http://www.fixprotocol.org/FIXML-5-0-SP2",
+  },
+  order: {
+    '@': {
+      TmInForce: '0',
+      Typ: '1',
+      Side: '1',
+      Acct: '12345678',
+    },
+    Instrmt: {
+      '@': {
+        SecTyp: 'CS',
+        Sym: 'GE',
+      }
+    },
+    OrdQty: {
+      Qty: '1'
+    }
+  }
+};
+
+
+console.log(js2xmlparser("FIXML", fixmlRoot, options));
+
 
 module.exports =  tradekingApi;
