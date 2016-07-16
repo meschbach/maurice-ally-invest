@@ -37,7 +37,7 @@ class tradekingApi {
     return consumerKey && consumerSecret && oauthToken && oauthTokenSecret;
   }
 
-  _getApiEndPoint(endpoint, queryParam, stream = false) {
+  _getApiEndPoint(endpoint, queryParam, stream = false, options = { useGet: true, postBody: null }) {
     let url = `${this.apiEndPoint}/${endpoint}.${this.responseType}`;
     if (queryParam) {
       url = `${this.apiEndPoint}/${endpoint}.${this.responseType}?${queryParam}`;
@@ -48,16 +48,30 @@ class tradekingApi {
     }
 
     return new Promise((resolve, reject) => {
-      this.tradekingClient.get(
-        url,
-        this.options.oauthToken,
-        this.options.oauthTokenSecret,
-        (error, data, response) => {
-          if (error) reject(error);
-          if (this.responseType === 'xml') resolve(data);
-          return resolve(JSON.parse(data));
-        }
-      );
+      if (options.useGet) {
+        this.tradekingClient.get(
+          url,
+          this.options.oauthToken,
+          this.options.oauthTokenSecret,
+          (error, data, response) => {
+            if (error) reject(error);
+            if (this.responseType === 'xml') resolve(data);
+            return resolve(JSON.parse(data));
+          }
+        );
+      } else {
+        this.tradekingClient.post(
+          url,
+          this.options.oauthToken,
+          this.options.oauthTokenSecret,
+          options.postBody,
+          (error, data, response) => {
+            if (error) reject(error);
+            if (this.responseType === 'xml') resolve(data);
+            return resolve(JSON.parse(data));
+          }
+        );
+      } 
     });
   }
 
@@ -79,6 +93,27 @@ class tradekingApi {
     }
 
     if (!_.isString(field) && !_.isArray(field)) this._throwError(`Invalid type ${typeof field} for ${fieldName}`);
+  }
+
+  _buildFxml(body) {
+    const options = { declaration: { include: false }};
+    const fixmlRoot = {
+      '@': {
+        xmlns:"http://www.fixprotocol.org/FIXML-5-0-SP2",
+      },
+      body,
+    };
+    return js2xmlparser("FIXML", fixmlRoot, options);
+  }
+
+  _trimQueryStrings(strings, ...values) {
+    let queryString = '';
+    _(strings).forEach((string, key) => {
+      if (!values[key]) return false;
+      queryString += queryString + string + '=' + values[key];
+    });
+
+    return queryString;
   }
 
   setResponseType(type) {
@@ -110,9 +145,10 @@ class tradekingApi {
     return this._getApiEndPoint(`accounts/${id}/orders`);
   }
   
-  postAccountOrders(id) {
+  postAccountOrder(id, order) {
    this._validateId(id);
-   return this._getApiEndPoint(`accounts/${id}/orders`);
+   const postBody = this._buildFxml(order);
+   return this._getApiEndPoint(`accounts/${id}/orders`, null, null, { useGet: false, postBody });
   }
   
   balanceForAccount(id) {
@@ -157,21 +193,26 @@ class tradekingApi {
     if (_.isArray(symbols)) {
       formatedSymbols = formatedSymbols.join(',');
     }
-    return this._getApiEndPoint(`market/news/search`, `symbols=${symbols}&maxhits=${maxhits}`);
+    return this._getApiEndPoint(`market/news/search`, this._trimQueryStrings`symbols=${symbols}&maxhits=${maxhits}&startdate=${startdate}&enddate=${enddate}`);
   }
 
   memberProfile() {
     return this._getApiEndPoint(`member/profile`);
   }
 
-  getMarketQuotesForSymbols({ symbols, dataFields, stream = false }) {
+  getMarketQuotesForSymbols({ symbols, fids, dataFields, stream = false }) {
     this._fieldIsArrayOrSingle({ field: symbols, fieldName: 'symbols'});
+    if (fids) this._fieldIsArrayOrSingle({ field: fids, fieldName: 'fids'});
     let formatedSymbols = symbols;
+    let formatedFids = fids;
     if (_.isArray(symbols)) {
       formatedSymbols = formatedSymbols.join(',');
     }
-    if (stream) return this._getApiEndPoint(`market/quotes`, `symbols=${symbols}`, stream);
-    return this._getApiEndPoint(`market/ext/quotes`, `symbols=${symbols}`, stream);
+    if (_.isArray(fids)) {
+      formatedFids = formatedFids.join(',');
+    }
+    if (stream) return this._getApiEndPoint(`market/quotes`, this._trimQueryStrings`symbols=${formatedSymbols}&fids=${formatedFids}`, stream);
+    return this._getApiEndPoint(`market/ext/quotes`, this.trimedQueryStrings`symbols=${formatedSymbols}&fids${formatedFids}`, stream);
   }
 
   streamMarketQuotesForSymbols(options) {
@@ -182,35 +223,6 @@ class tradekingApi {
   utilityStatus() {
     return this._getApiEndPoint(`utility/status`);
   }
-
 }
-
-const options = { declaration: { include: false }};
-const fixmlRoot = {
-  '@': {
-    xmlns:"http://www.fixprotocol.org/FIXML-5-0-SP2",
-  },
-  order: {
-    '@': {
-      TmInForce: '0',
-      Typ: '1',
-      Side: '1',
-      Acct: '12345678',
-    },
-    Instrmt: {
-      '@': {
-        SecTyp: 'CS',
-        Sym: 'GE',
-      }
-    },
-    OrdQty: {
-      Qty: '1'
-    }
-  }
-};
-
-
-console.log(js2xmlparser("FIXML", fixmlRoot, options));
-
 
 module.exports =  tradekingApi;
