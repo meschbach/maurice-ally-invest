@@ -10,10 +10,10 @@ const tradeKingApi = require('trade-king-api');
 
 // Setup key/secret for authentication and API endpoint URL
 const configuration = {
-consumerKey: 'Your key',
-             consumerSecret: 'Secret',
-             oauthToken: 'Token',
-             oauthTokenSecret: 'TokenSecret',
+  consumerKey: 'Your key',
+  consumerSecret: 'Secret',
+  oauthToken: 'Token',
+  oauthTokenSecret: 'TokenSecret',
 };
 const tradekingClient = new tradeKingApi(configuration);
 tradekingClient.setResponseType('xml');
