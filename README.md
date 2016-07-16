@@ -3,6 +3,7 @@ Abstraction for tradeking api
 
 ## Install
 > npm install --save trade-king-api
+
 ## Init
 ```javascript
 const tradeKingApi = require('trade-king-api');
