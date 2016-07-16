@@ -55,7 +55,7 @@ class tradekingApi {
           this.options.oauthTokenSecret,
           (error, data, response) => {
             if (error) reject(error);
-            if (this.responseType === 'xml') resolve(data);
+            if (this.responseType === 'xml') return resolve(data);
             return resolve(JSON.parse(data));
           }
         );
@@ -67,7 +67,7 @@ class tradekingApi {
           options.postBody,
           (error, data, response) => {
             if (error) reject(error);
-            if (this.responseType === 'xml') resolve(data);
+            if (this.responseType === 'xml') return resolve(data);
             return resolve(JSON.parse(data));
           }
         );
@@ -156,9 +156,24 @@ class tradekingApi {
     return this._getApiEndPoint(`accounts/${id}/balances`);
   }
 
-  historyForAccount(id) {
+  historyForAccount(id, range = 'all', transaction = 'all') {
     this._validateId(id);
-    return this._getApiEndPoint(`accounts/${id}/history`);
+    const validRangeTypes = [
+      'all',
+      'today',
+      'current_week',
+      'current_month',
+      'last_month'
+    ];
+    const validTransactionTypes = [
+      'all',
+      'bookkeeping',
+      'trade'
+    ];
+    if (range && !validRangeTypes.includes(range)) this._throwError('Invalid range passed');
+    if (transactions && !validTransactionTypes.includes(transaction)) this._throwError('Invalid transaction passed');
+    
+    return this._getApiEndPoint(`accounts/${id}/history`, this._trimQueryStrings`range=${range}&transactions=${transactions}`);
   }
   
   holdingsForAccount(id) {
@@ -200,7 +215,7 @@ class tradekingApi {
     return this._getApiEndPoint(`member/profile`);
   }
 
-  getMarketQuotesForSymbols({ symbols, fids, dataFields, stream = false }) {
+  getMarketQuotesForSymbols({ symbols, fids, stream = false }) {
     this._fieldIsArrayOrSingle({ field: symbols, fieldName: 'symbols'});
     if (fids) this._fieldIsArrayOrSingle({ field: fids, fieldName: 'fids'});
     let formatedSymbols = symbols;
@@ -222,6 +237,21 @@ class tradekingApi {
 
   utilityStatus() {
     return this._getApiEndPoint(`utility/status`);
+  }
+
+  watchLists(watchListName) {
+    if (watchListName) return this._getApiEndPoint(`watchlists/${watchListName}`);
+    return this._getApiEndPoint(`watchlists`);
+  }
+
+  newWatchList(watchListName, symbols) {
+    this._fieldIsArrayOrSingle({ field: symbols, fieldName: 'symbols'});
+    if (!watchListName) this._throwError('You must pass a watch list name');
+    let formatedSymbols = symbols;
+    if (_.isArray(symbols)) {
+      formatedSymbols = formatedSymbols.join(',');
+    }
+    return this._getApiEndPoint(`watchlists`, `id=${watchListName}&symbols=${formatedSymbols}`, null, { useGet: false, postBody: null });
   }
 }
 
