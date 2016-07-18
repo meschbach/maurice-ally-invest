@@ -73,7 +73,7 @@ console.log(postOrder); // order structure
 
 const tradekingClient = new tradeKingApi(configuration);
 tradekingClient.setResponseType('xml');
-tradekingClient.postAccountOrder('11111111', postOrder).then(response => {
+tradekingClient.postAccountOrder('12345678', postOrder).then(response => {
     console.log(response);
     }).catch(err => {
       console.log('error');
