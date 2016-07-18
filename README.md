@@ -42,7 +42,8 @@ This call will return the most recent orders for the account number passed.
 ### postAccountOrder(accountId, order)
 
 This call will allow you to place an order. This requires the order data is submitted in FIXML format submitted as XML within the body.
-Example:
+
+Example (see [js2xmlparser](https://github.com/michaelkourlas/node-js2xmlparser) ) for pattern building orders:
 ``` javascript
 const postOrder = {
 order: {
@@ -63,6 +64,12 @@ Qty: '1'
         }
        }
 };
+
+console.log(postOrder); // order structure
+>  <Order TmInForce="0" Typ="1" Side="1" Acct="12345678">
+>    <Instrmt SecTyp="CS" Sym="GE"/>
+>    <OrdQty Qty="1"/>
+>  </Order>
 
 const tradekingClient = new tradeKingApi(configuration);
 tradekingClient.setResponseType('xml');
@@ -106,3 +113,16 @@ This will retrieve a list of watchlists for the authenticated user if no watchLi
 ### newWatchList(watchListId, symbols)
 This will create a watchlist with the specified id for the authenticated user.
 
+## ToDo's
+___
+1. Add the following helper methods for trading 
+    * Buy Order. 
+    * Sell Order.
+    * Sell Short (opening a short position).
+    * Buy to Cover (closing a short position).
+    * Change Order.
+    * Cancel Order.
+    * Buy to Open (opening a long option purchase).
+    * Sell to Open (opening a short option sell).
+    * Buy to Close (closing a previously opened short option).
+    * Sell to Close (closing a previously opened long option).
