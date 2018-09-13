@@ -1,29 +1,34 @@
 {
-  "name": "trade-king-api",
-  "version": "0.0.1",
-  "description": "Abstraction for trade king api",
+  "name": "ally-invest",
+  "version": "0.1.0",
+  "description": "Wrapper for Ally Invest API (formerly TradeKing)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codeNgamer/tradeKingApi.git"
+    "url": "git+https://github.com/charltoons/node-ally-invest.git"
   },
   "keywords": [
-    "tradeking",
+    "ally",
     "stock",
+    "invest",
+    "tradeking",
     "api"
   ],
-  "author": "codeNgamer",
-  "license": "ISC",
+  "author": "Charlton Roberts <charltonroberts@gmail.com>",
+  "contributors": [
+    "codeNgamer"
+  ],
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/codeNgamer/tradeKingApi/issues"
+    "url": "https://github.com/charltoons/node-ally-invest/issues"
   },
-  "homepage": "https://github.com/codeNgamer/tradeKingApi#readme",
+  "homepage": "https://github.com/charltoons/node-ally-invest",
   "dependencies": {
     "js2xmlparser": "^1.0.0",
     "lodash": "^4.13.1",
-    "oauth": "^0.9.14"
+    "oauth": "^0.9.15"
   }
 }
