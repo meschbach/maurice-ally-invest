@@ -1,12 +1,12 @@
-# trade-king-api
-Abstraction for tradeking api
+# ally-invest
+Abstraction for Ally Invest API (previously TradeKing API).
 
 ## Install
-> npm install --save trade-king-api
+> npm install --save ally-invest
 
 ## Init
 ```javascript
-const tradeKingApi = require('trade-king-api');
+const allyInvestApi = require('ally-invest');
 
 // Setup key/secret for authentication and API endpoint URL
 const configuration = {
@@ -15,7 +15,7 @@ const configuration = {
   oauthToken: 'Token',
   oauthTokenSecret: 'TokenSecret',
 };
-const tradekingClient = new tradeKingApi(configuration);
+const tradekingClient = new allyInvestApi(configuration);
 tradekingClient.setResponseType('xml');
 
 ```
@@ -71,7 +71,7 @@ console.log(postOrder); // order structure
 >    <OrdQty Qty="1"/>
 >  </Order>
 
-const tradekingClient = new tradeKingApi(configuration);
+const tradekingClient = new allyInvestApi(configuration);
 tradekingClient.setResponseType('xml');
 tradekingClient.postAccountOrder('12345678', postOrder).then(response => {
     console.log(response);
