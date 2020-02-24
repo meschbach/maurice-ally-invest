@@ -15,8 +15,8 @@ const configuration = {
   oauthToken: 'Token',
   oauthTokenSecret: 'TokenSecret',
 };
-const tradekingClient = new allyInvestApi(configuration);
-tradekingClient.setResponseType('xml');
+const allyInvestClient = new allyInvestApi(configuration);
+allyInvestClient.setResponseType('xml');
 
 ```
 ## Api
@@ -71,9 +71,9 @@ console.log(postOrder); // order structure
 >    <OrdQty Qty="1"/>
 >  </Order>
 
-const tradekingClient = new allyInvestApi(configuration);
-tradekingClient.setResponseType('xml');
-tradekingClient.postAccountOrder('12345678', postOrder).then(response => {
+const allyInvestClient = new allyInvestApi(configuration);
+allyInvestClient.setResponseType('xml');
+allyInvestClient.postAccountOrder('12345678', postOrder).then(response => {
     console.log(response);
     }).catch(err => {
       console.log('error');
