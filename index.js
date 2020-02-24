@@ -156,7 +156,7 @@ class tradekingApi {
     return this._getApiEndPoint(`accounts/${id}/balances`);
   }
 
-  historyForAccount(id, range = 'all', transaction = 'all') {
+  historyForAccount(id, range = 'all', transactions = 'all') {
     this._validateId(id);
     const validRangeTypes = [
       'all',
@@ -171,7 +171,7 @@ class tradekingApi {
       'trade'
     ];
     if (range && !validRangeTypes.includes(range)) this._throwError('Invalid range passed');
-    if (transactions && !validTransactionTypes.includes(transaction)) this._throwError('Invalid transaction passed');
+    if (transactions && !validTransactionTypes.includes(transactions)) this._throwError('Invalid transaction passed');
     
     return this._getApiEndPoint(`accounts/${id}/history`, this._trimQueryStrings`range=${range}&transactions=${transactions}`);
   }
