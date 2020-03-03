@@ -2,7 +2,7 @@ const oauth = require('oauth');
 const _ = require('lodash');
 const js2xmlparser = require("js2xmlparser");
 
-class tradekingApi {
+class AllyInvestClient {
   constructor(options) {
     const isValidCredentials = this._validateCredentials(options);
     if (!isValidCredentials) {
@@ -256,4 +256,4 @@ class tradekingApi {
   }
 }
 
-module.exports =  tradekingApi;
+module.exports =  AllyInvestClient;
