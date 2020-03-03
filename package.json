@@ -1,6 +1,6 @@
 {
   "name": "maurice-ally-invest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Maurice integration for Ally Invest (formerly TradeKing)",
   "main": "index.js",
   "scripts": {
