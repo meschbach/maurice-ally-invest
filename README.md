@@ -1,8 +1,12 @@
-# ally-invest
-Abstraction for Ally Invest API (previously TradeKing API).
+# maurice-ally-invest
+A [Maurice](github.com/meschbach/maurice) module for integrating with [Ally Invest](https://www.ally.com/invest/)
+(who bought Trade King).  This module is currently installed into Maurice by default.
+
+This is a fork of [charltoons/node-ally-invest](https://github.com/charltoons/node-ally-invest) since it was not updated
+or changed over the past several years.
 
 ## Install
-> npm install --save ally-invest
+> npm install --save maurice-ally-invest
 
 ## Init
 ```javascript
