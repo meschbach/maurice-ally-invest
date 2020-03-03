@@ -121,9 +121,7 @@ class AllyInvestClient {
       case 'json': this.responseType = type; break;
       case 'xml': this.responseType = type; break;
       default :
-        console.log('You passed an invalid response type, default will be used');
-        this.responseType = 'json';
-        break;
+        throw new Error('You passed an invalid response type, must be either json or xml');
     }
   }
 
