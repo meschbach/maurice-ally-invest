@@ -1,14 +1,14 @@
 {
-  "name": "ally-invest",
+  "name": "maurice-ally-invest",
   "version": "0.1.0",
-  "description": "Wrapper for Ally Invest API (formerly TradeKing)",
+  "description": "Maurice integration for Ally Invest (formerly TradeKing)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/charltoons/node-ally-invest.git"
+    "url": "git+https://github.com/meschbach/maurice-ally-invest.git"
   },
   "keywords": [
     "ally",
@@ -19,16 +19,17 @@
   ],
   "author": "Charlton Roberts <charltonroberts@gmail.com>",
   "contributors": [
-    "codeNgamer"
+    "codeNgamer",
+    "Mark Eschbach <meschbach@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/charltoons/node-ally-invest/issues"
+    "url": "https://github.com/meschbach/maurice-ally-invest/issues"
   },
-  "homepage": "https://github.com/charltoons/node-ally-invest",
+  "homepage": "https://github.com/meschbach/maurice-ally-invest",
   "dependencies": {
     "js2xmlparser": "^1.0.0",
-    "lodash": "^4.13.1",
-    "oauth": "^0.9.15"
+    "lodash": "4.17.15",
+    "oauth": "0.9.15"
   }
 }
