@@ -226,7 +226,6 @@ class AllyInvestClient {
     if (_.isArray(fids)) {
       formatedFids = formatedFids.join(',');
     }
-    console.log(formatedSymbols, this._trimQueryStrings`symbols=${formatedSymbols}&fids${formatedFids}`)
     if (stream) return this._getApiEndPoint(`market/quotes`, this._trimQueryStrings`symbols=${formatedSymbols}&fids=${formatedFids}`, stream);
     return this._getApiEndPoint(`market/ext/quotes`, this._trimQueryStrings`symbols=${formatedSymbols}&fids${formatedFids}`, stream);
   }
