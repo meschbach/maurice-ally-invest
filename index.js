@@ -256,4 +256,6 @@ class AllyInvestClient {
   }
 }
 
-module.exports =  AllyInvestClient;
+module.exports = {
+  AllyInvestClient
+};
